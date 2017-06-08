@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4019.2">
+  <POU Name="F_CalcSum1DimArrayOldSchool" Id="{58a01e4b-55b1-4093-94d7-0445d4603998}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_CalcSum1DimArrayOldSchool : LREAL
+VAR_INPUT
+	pData			: POINTER TO LREAL;
+	nSize			: UDINT;
+END_VAR
+VAR
+	pDataIndex		: POINTER TO LREAL;
+	nUpperIndex		: UDINT;
+	nIndex			: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[F_CalcSum1DimArrayOldSchool := 0;
+nUpperIndex := nSize / SIZEOF(pDataIndex^);
+IF (nUpperIndex > 0) THEN
+	FOR nIndex := 0 TO (nUpperIndex - 1) DO
+		pDataIndex := pData + (nIndex * SIZEOF(pDataIndex^));
+		F_CalcSum1DimArrayOldSchool := F_CalcSum1DimArrayOldSchool + pDataIndex^;	
+	END_FOR
+END_IF
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
